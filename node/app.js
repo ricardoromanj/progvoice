@@ -120,6 +120,7 @@ app.post('/gatherreply', (req, res) => {
   } else {
     let gather = twiml.gather({
       input: 'speech',
+      timeout: 3,
       action: actionStr
     });
     gather.say(prompt);
@@ -140,9 +141,9 @@ app.post('/sendreplyruby', (req, res) => {
   let speechResult = req.body['SpeechResult'];
   let invalidInput = false;
 
-  if (speechResult === 'hello') {
+  if (speechResult.match(/hello/i)) {
     reply = 'hello';
-  } else if (speechResult === 'goodbye' || speechResult === 'good bye') {
+  } else if (speechResult.match(/goodbye/i) || speechResult.match(/good bye/i)) {
     reply = 'goodbye';
   } else {
     reply = 'Invalid input.';
@@ -202,9 +203,9 @@ app.post('/sendreplypython', (req, res) => {
   let speechResult = req.body['SpeechResult'];
   let invalidInput = false;
 
-  if (speechResult === 'hello') {
+  if (speechResult.match(/hello/i)) {
     reply = 'hello';
-  } else if (speechResult === 'goodbye' || speechResult === 'good bye') {
+  } else if (speechResult.match(/goodbye/i) || speechResult.match(/good bye/i)) {
     reply = 'goodbye';
   } else {
     reply = 'Invalid input.';
@@ -262,9 +263,9 @@ app.post('/sendreplynode', (req, res) => {
   let speechResult = req.body['SpeechResult'];
   let invalidInput = false;
 
-  if (speechResult === 'hello') {
+  if (speechResult.match(/hello/i)) {
     prompt = 'Hello from Node.';
-  } else if (speechResult === 'goodbye' || speechResult === 'good bye') {
+  } else if (speechResult.match(/goodbye/i) || speechResult.match(/good bye/i)) {
     prompt = 'Good bye from Node.';
   } else {
     prompt = 'Invalid input.';
