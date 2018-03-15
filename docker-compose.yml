@@ -2,20 +2,26 @@ version: "3"
 
 services:
   vruby:
-    build: ./ruby
-    command: ruby app.rb
+    image: rjricardo/progvoice-ruby
     networks:
       - progvoice
   vpython:
-    build: ./python
-    command: python app.py
+    image: rjricardo/progvoice-python
     networks:
       - progvoice
   vnode:
-    build: ./node
-    command: npm start
+    image: rjricardo/progvoice-node
     ports:
       - "8020:3000"
+    environment:
+      - PORT=3000
+      - UTC_OFFSET=-6
+      - RETHINKDB_HOST=vrdb
+      - RETHINKDB_PORT=28015
+      - PYTHON_SERVER_HOST=vpython
+      - PYTHON_SERVER_PORT=5000
+      - RUBY_SERVER_HOST=vruby
+      - RUBY_SERVER_PORT=3000
     networks:
       - progvoice
   vrdb:

@@ -28,6 +28,10 @@ class App extends Component {
   componentDidMount() {
     const socket = socketIOClient(this.state.endpoint, { reconnection: true });
 
+    socket.on('load-data', (data) => {
+      this.handleLoadCalls(data);
+    });
+
     socket.on('update-data', (data) => {
       if (data.call) {
         this.handleAddCall(data.call);
@@ -44,6 +48,12 @@ class App extends Component {
 
   }
 
+  handleLoadCalls = (calls) => {
+    this.setState(() => ({
+      calls: calls
+    }));
+  };
+
   handleAddCall = (call) => {
     this.setState((prevState) => ({
       calls: prevState.calls.concat(call)
@@ -53,7 +63,7 @@ class App extends Component {
   handleDeleteCalls = () => {
     this.setState(() => ({
       calls: []
-    }))
+    }));
   };
 
   render() {
