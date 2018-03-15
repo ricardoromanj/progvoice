@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  vruby:
+    build: ./ruby
+    command: ruby app.rb
+    networks:
+      - progvoice
+  vpython:
+    build: ./python
+    command: python app.py
+    networks:
+      - progvoice
+  vnode:
+    build: ./node
+    command: npm start
+    ports:
+      - "8020:3000"
+    networks:
+      - progvoice
+  vrdb:
+    image: rethinkdb
+    networks:
+      - progvoice
+
+networks:
+  progvoice:
+    driver: bridge
